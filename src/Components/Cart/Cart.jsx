@@ -17,7 +17,6 @@ export default function Cart() {
 
   async function getCartItems() {
     setIsExecuting(true)
-
     let response = await getLoggedUserCart();
     console.log(response);
     if (response.data.status == "success") {
@@ -188,7 +187,6 @@ export default function Cart() {
         </table>
             <Link to={'/checkout'}>
             <button className="btn my-3 text-center mx-auto">Checkout</button>
-            
             </Link>
 
       </div> </> : <h1 className="text-white p-3  bg-slate-400  text-3xl my-8 text-center">No product added..</h1>}

@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { WishlistContext } from "../../Context/WishlistContext";
 import toast from 'react-hot-toast';
 import { CartContext } from "../../Context/CartContext";
+import { redirect, useNavigate } from "react-router-dom";
+
+
 
 
 
 export default function Wishlist() {
-
+  const navigate = useNavigate();
 
   const [WishListDetails, setWishListDetails] = useState(null);
   const [isExecuting, setIsExecuting] = useState(false); // Local loading state
@@ -17,8 +20,8 @@ export default function Wishlist() {
 
   
   async function getWishListItems() {
-    setIsExecuting(true)
     let response = await getLoggedUserWishlist();
+    setIsExecuting(true)
     console.log(response);
     if (response.data.status == "success") {
       setWishListDetails(response.data.data);
@@ -38,6 +41,7 @@ export default function Wishlist() {
     if (response.data.status == "success") {
       toast.success('Product removed from wishlist');
       getWishListItems();
+      navigate('/wishlist')
     }
 
     
@@ -51,6 +55,7 @@ export default function Wishlist() {
     if(response.data.status == "success") {
       setnumberItems(numberItems + 1)
       toast.success(response.data.message)
+
     }
     
     else {
@@ -107,10 +112,11 @@ export default function Wishlist() {
            {product.price}
          </td>
          <td className="px-6 py-4">
-           <a onClick={()=> deleteItem(product.id)} href="#" className="font-medium text-red-600 hover:text-red-600 hover:underline">Remove</a>
+           <button  className="font-medium text-red-600 hover:text-red-600 hover:underline" onClick={()=> deleteItem(product.id)}>Delete</button>
+
          </td>
          <td className="px-6 py-4">
-           <a onClick={()=> addToCart(product.id)} href="#" className="font-medium text-blue-600 hover:text-blue-600 hover:underline">Add to Cart</a>
+          <button className="font-medium text-blue-600 hover:text-blue-600 hover:underline" onClick={()=> addToCart(product.id)}>Add</button>
          </td>
        </tr>
       ))}

@@ -22,6 +22,8 @@ import Wishlist from "./Components/Wishlist/Wishlist";
 import WishlistContextProvider from "./Context/WishlistContext";
 import ForgottenPassword from "./Components/ForgottenPassword/ForgottenPassword";
 import PasswordToken from "./Components/PasswordToken/PasswordToken";
+import { createHashRouter } from "react-router-dom";
+
 
 
  
@@ -29,7 +31,7 @@ import PasswordToken from "./Components/PasswordToken/PasswordToken";
 
 let query = new QueryClient();
 
-let x = createBrowserRouter([
+let x = createHashRouter([
   {
     path: "",
     element: <Layout />,
@@ -108,11 +110,10 @@ let x = createBrowserRouter([
         ),
       },
       { path: "login", element: <Login /> },
-      { path: "forgottenPassword", element: <ForgottenPassword /> },
       { path: "register", element: <Register /> },
       { path: "*", element: <Notfound /> },
-      {path: "reset-password-token", element: <PasswordToken/>},
-      {path: "ecommerce", element: <Login />}
+      // { path: "forgottenPassword", element: <ForgottenPassword /> },
+      // {path: "reset-password-token", element: <PasswordToken/>},
     ],
   },
 ]);

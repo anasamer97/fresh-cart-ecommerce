@@ -117,9 +117,9 @@ export default function Login() {
           <Link className="bg-green-500  border p-2 rounded-lg hover:text-white  text-center text-white " to={"/register"}>
           Signup 
           </Link>
-          <Link className="bg-green-500  border p-2 rounded-lg hover:text-white  text-center text-white " to={"/forgottenPassword"}>
+          {/* <Link className="bg-green-500  border p-2 rounded-lg hover:text-white  text-center text-white " to={"/forgottenPassword"}>
           Forgot password? 
-          </Link>
+          </Link> */}
          
         </div>
       </form>

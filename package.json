@@ -2,12 +2,12 @@
   "name": "final_project",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https:/anasamer97.github.io/ecommerce",
+  "homepage": "https://anasamer97.github.io/fresh-cart-ecommerce",
   "type": "module",
   "scripts": {
+    "dev": "vite",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
