@@ -2,7 +2,7 @@
   "name": "final_project",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https:/anasamer97.github.io/e-commerce",
+  "homepage": "https:/anasamer97.github.io/ecommerce",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",

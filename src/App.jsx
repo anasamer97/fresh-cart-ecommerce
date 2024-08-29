@@ -29,13 +29,14 @@ import PasswordToken from "./Components/PasswordToken/PasswordToken";
 
 let query = new QueryClient();
 
+
 let x = createBrowserRouter([
   {
     path: "",
     element: <Layout />,
     children: [
       {
-        index: true,
+        
         element: (
           <ProtectedRoute>
             <Home />{" "}
@@ -107,11 +108,13 @@ let x = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      { path: "login", element: <Login /> },
+      {index: true, element: <Login />},
+      { path: "*", element: <Notfound /> },
+      { path: "login", element: <Login />},
       { path: "forgottenPassword", element: <ForgottenPassword /> },
       { path: "register", element: <Register /> },
-      { path: "*", element: <Notfound /> },
-      {path: "reset-password-token", element: <PasswordToken/>}
+      { path: "reset-password-token", element: <PasswordToken/>},
+      {path: "ecommerce", element: <Login />}
     ],
   },
 ]);
