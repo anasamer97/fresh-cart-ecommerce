@@ -2,14 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { WishlistContext } from "../../Context/WishlistContext";
 import toast from 'react-hot-toast';
 import { CartContext } from "../../Context/CartContext";
-import { redirect, useNavigate } from "react-router-dom";
 
 
 
 
 
 export default function Wishlist() {
-  const navigate = useNavigate();
 
   const [WishListDetails, setWishListDetails] = useState(null);
   const [isExecuting, setIsExecuting] = useState(false); // Local loading state
