@@ -17,13 +17,15 @@ export default function Checkout() {
       city: ""
     },
     onSubmit: () => {
-      handleCheckout(cartId, `http://localhost:5173`)
+      handleCheckout(cartId, `http://localhost:5173/fresh-cart-ecommerce`)
     } 
   });
 
 
   async function handleCheckout(cartId, url) {
     let {data} =  await checkout(cartId, url, formik.values);
+    console.log(data.session.url);
+    
     window.location.href = data.session.url
   }
 

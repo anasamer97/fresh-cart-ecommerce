@@ -71,15 +71,15 @@ export default function Cart() {
 
   if (isExecuting) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="loader animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-emerald-500"></div>
-      </div>
+      <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+</div>
     );
   }
 
   return (
     <>
-      {CartDetails?.products.length > 0 ? <><h2 className="text-center text-2xl  font-bold capitalize my-4">
+      {CartDetails?.products.length > 0 ? <><h2 className="text-center text-2xl  font-bold capitalize my-8">
         Total Price: {CartDetails?.totalCartPrice}
       </h2>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

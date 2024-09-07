@@ -1,42 +1,33 @@
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import useProducts from "../../Hooks/useProducts";
-import React, { useContext, useState } from "react";
+import { WishlistContext } from "../../Context/WishlistContext"
 import { CartContext } from "../../Context/CartContext";
+import React, { useContext, useState } from "react";
+import axios from "axios";
+import useProducts from "../../Hooks/useProducts";
 import toast from 'react-hot-toast';
-import { WishlistContext } from "../../Context/WishlistContext";
 
 
 
 
 export default function RecentProducts() {
 
-  
+  // Destructing..
   let {data, isError, isLoading, error} = useProducts()
   let {addProductToCard, setnumberItems, numberItems} = useContext(CartContext);
+  const [currentId, setcurrentId] = useState(0)
+
+
+  // Destructing..
   let {addProductToWishlist, wishlistItems, setWishListitems} = useContext(WishlistContext)
   const [currentWLid, setCurrentWLid] = useState(0);
-  const [currentId, setcurrentId] = useState(0)
+
+
+  // Loading animation state..
   const [Loading, setLoading] = useState(false)
   
 
-  async function addToWishlist(id) {
-    setCurrentWLid(id);
-    let response = await addProductToWishlist(id)
-    if(response.data.status == "success") {
-      setCurrentWLid(currentWLid + 1)
-      toast.success('Product Added to Wishlist');
-      setLoading(false)
-    }
   
-    else {
-      toast.error('Product did not get removed from Wishlist');
-      setLoading(false)
-    }
-  }
-
-
   async function addToCart(id) {
     setcurrentId(id)
     setLoading(true)
@@ -56,7 +47,21 @@ export default function RecentProducts() {
 
     }
   }
- 
+
+  async function addToWishlist(id) {
+    setCurrentWLid(id);
+    let response = await addProductToWishlist(id)
+    if(response.data.status == "success") {
+      setCurrentWLid(currentWLid + 1)
+      toast.success('Product Added to Wishlist');
+      setLoading(false)
+    }
+  
+    else {
+      toast.error('Product did not get removed from Wishlist');
+      setLoading(false)
+    }
+  }
 
 
   if (isError) {
@@ -64,18 +69,18 @@ export default function RecentProducts() {
   }
    
  if (isLoading) {
-    return <div className="spinner"></div>
+    return <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+  </div>
  }
 
-//  console.log(data.data.data);
- 
 
   return (
     <>
       <div className="row"> 
         {data?.data?.data.map((product) => (
-          <div key={product.id} className="w-full md:w-1/3 lg:w-1/4 xl:w-1/6">
-            <div className="product m-1 border border-gray-500">
+          <div key={product.id} className="w-full md:w-1/3 lg:w-1/4 ">
+            <div className="product p-2 hover:shadow-lg   hover:shadow-emerald-500/70 transition duration-300">
 
               <Link
                 to={`productdetails/${product.id}/${product.category.name}`}
@@ -107,7 +112,7 @@ export default function RecentProducts() {
 
               </div>
 
-              <button onClick={() => addToCart(product.id)} className="btn">{Loading && currentId == product.id ? <i className="fas fa-spinner fa-spin"></i> : "Add to card"}</button>
+              <button onClick={() => addToCart(product.id)} className="btn  sm">{Loading && currentId == product.id ? <i className="fas fa-spinner fa-spin"></i> : "Add to cart"}</button>
             </div>
           </div>
         ))}

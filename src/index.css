@@ -108,3 +108,17 @@ a:hover {
         -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
     }
 }
+
+@media screen and (max-width: 640px) {
+    .product .btn {
+        transition: none;
+        transform: none;
+        opacity: 1;
+    }
+    
+    .product:hover .btn {
+        opacity: 1;
+        transform: none;
+    
+    }
+}

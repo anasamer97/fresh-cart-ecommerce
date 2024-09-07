@@ -32,9 +32,9 @@ export default function Brands() {
      
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="loader animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-emerald-500"></div>
-      </div>
+      <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+  <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+  </div>
     );
  }
 

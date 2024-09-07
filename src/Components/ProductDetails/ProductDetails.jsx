@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import style from "./ProductDetails.module.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Slider from "react-slick";
+import toast from 'react-hot-toast';
+import { CartContext } from "../../Context/CartContext";
+import useProducts from "../../Hooks/useProducts";
+
+
+
 var settings = {
   dots: false,
   infinite: true,
@@ -15,11 +21,49 @@ var settings = {
 //https://ecommerce.routemisr.com/api/v1/products
 
 export default function ProductDetails() {
+  let {data, isError, isLoading, error} = useProducts()
+  let {addProductToCard, setnumberItems, numberItems} = useContext(CartContext);
+
+
+
+  const [isExecuting, setIsExecuting] = useState(false); 
+
+  
+  const [currentId, setcurrentId] = useState(0)
+
+
+
+  const [Loading, setLoading] = useState(false)
+
+
+  async function addToCart(id) {
+    setcurrentId(id)
+    setLoading(true)
+    let response = await addProductToCard(id)
+    console.log(response);
+
+    if(response.data.status == "success") {
+      setnumberItems(numberItems + 1)
+      toast.success(response.data.message)
+      setLoading(false)
+
+    }
+    
+    else {
+      toast.error(response.data.message)
+      setLoading(false)
+
+    }
+  }
+
+
+
   const [product, setproduct] = useState(null);
   const [products, setproducts] = useState([]);
   let { id, category } = useParams();
 
   function getProduct(id) {
+
     axios
       .get(`https://ecommerce.routemisr.com/api/v1/products/${id}`)
       .then((res) => {
@@ -32,6 +76,7 @@ export default function ProductDetails() {
   }
 
   function getProducts() {
+    setIsExecuting(true)
     axios
       .get(`https://ecommerce.routemisr.com/api/v1/products`)
       .then((res) => {
@@ -39,6 +84,8 @@ export default function ProductDetails() {
           (product) => product.category.name == category
         );
         setproducts(related);
+
+        setIsExecuting(false)
       })
       .catch((res) => {
         console.log(res);
@@ -50,15 +97,23 @@ export default function ProductDetails() {
     getProducts();
   }, [id, category]);
 
+
+  if (isExecuting) {
+    return (
+      <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+      </div>
+    );
+  }
+ 
+
   return (
     <>
-      {/* <Slider {...settings}></Slider> */}
       <div className="row items-center">
         <div className="w-1/4">
         <Slider {...settings}>
           {product?.images.map((src) => <img key={src} src={src} className="w-full" alt="" />)}
         </Slider>
-          {/* <img src={product?.imageCover} className="w-full" alt="" /> */}
         </div>
         <div className="w-3/4 p-4">
           <h3 className="my-2 capitalize">{product?.title}</h3>
@@ -73,7 +128,8 @@ export default function ProductDetails() {
               {product?.ratingsAverage}
             </span>
           </div>
-          <button className="btn font-bold text-xl">Add to cart</button>
+          <button onClick={() => addToCart(product.id)} className="btn">{Loading && currentId == product.id ? <i className="fas fa-spinner fa-spin"></i> : "Add to cart"}</button>
+
         </div>
       </div>
       <div className="row">
@@ -101,7 +157,8 @@ export default function ProductDetails() {
                     </span>
                   </div>
                 </Link>
-                <button className="btn">add to cart</button>
+                <button onClick={() => addToCart(product.id)} className="btn">{Loading && currentId == product.id ? <i className="fas fa-spinner fa-spin"></i> : "Add to cart"}</button>
+
               </div>
             </div>
           ))

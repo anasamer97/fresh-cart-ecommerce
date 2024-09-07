@@ -92,7 +92,7 @@ export default function PasswordToken() {
       <Navbar />
       <div>
         <div className="heading-text text-center text-2xl my-2">
-          <h4 className="bg-slate-400 text-white my-2">
+          <h4 className="bg-emerald-400 mb-5 text-white ">
             Enter your reset token
           </h4>
         </div>
@@ -147,7 +147,7 @@ export default function PasswordToken() {
           </div>
 
 
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center ">
             <button
               type="submit"
               className="text-white bg-emerald-100 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800"

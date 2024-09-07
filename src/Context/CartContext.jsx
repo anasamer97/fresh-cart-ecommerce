@@ -33,9 +33,7 @@ export default function CartContextProvider(props) {
 
     async function getLoggedUserCart() {
         return axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, { headers }).then((res) => {
-            // console.log(res.data.data);
             setnumberItems(res.data.numOfCartItems)
-            // console.log(res.data.numOfCartItems );
             setcartId(res.data.data._id)
             return res;
         }).catch((err) => err);
@@ -72,6 +70,8 @@ export default function CartContextProvider(props) {
     useEffect(()=> {
         getLoggedUserCart()
     }, [])
+
+    
     return <CartContext.Provider value={{ addProductToCard, getLoggedUserCart,  updateCartProductQuantity, deleteCartItem, checkout, cartId, setnumberItems, numberItems}}>
         {props.children}
     </CartContext.Provider>

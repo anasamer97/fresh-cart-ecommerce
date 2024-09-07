@@ -46,7 +46,7 @@ export default function ForgottenPassword() {
     <>
     <div>
       <div className="heading-text text-center text-2xl my-2">
-      <h4 className="bg-slate-400 text-white my-2">Enter your email to send a reset token</h4>
+      <h4 className="bg-emerald-400 text-white my-2 p-3">Enter your email to send a reset token</h4>
       </div>
      <form  onSubmit={formik.handleSubmit}>
 
@@ -70,7 +70,7 @@ export default function ForgottenPassword() {
           {formik.errors.email && formik.touched.email ? (
             <span className="text-red-500 text-center w-1/2 mx-auto block">{formik.errors.email}</span>
           ) : null}
-          <button type="submit" className="bg-slate-400 p-3 rounded-md text-white w-1/4 block mx-auto my-4">Submit</button>
+          <button type="submit" className="bg-emerald-400 p-3 rounded-md text-white w-1/4 block mx-auto my-4">Submit</button>
           
 
 

@@ -1,24 +1,64 @@
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import useProducts from "../../Hooks/useProducts";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../../Context/CartContext";
+import axios from "axios";
+import useProducts from "../../Hooks/useProducts";
+import toast from 'react-hot-toast';
+
+
+
 
 
 
 export default function Products() {
 
+  let {data, isError, isLoading, error} = useProducts()
+  let {addProductToCard, setnumberItems, numberItems} = useContext(CartContext);
+  const [currentId, setcurrentId] = useState(0)
 
-  let {data} = useProducts()
+  const [Loading, setLoading] = useState(false)
+
+
+
+  async function addToCart(id) {
+    setcurrentId(id)
+    setLoading(true)
+    let response = await addProductToCard(id)
+    console.log(response);
+
+    if(response.data.status == "success") {
+      setnumberItems(numberItems + 1)
+      toast.success(response.data.message)
+      setLoading(false)
+
+    }
+    
+    else {
+      toast.error(response.data.message)
+      setLoading(false)
+
+    }
+  }
+
+
+  if (isError) {
+    return <h3>{error.message}</h3>
+  }
+   
+ if (isLoading) {
+    return <div className="spinner"></div>
+ }
+
+
   return (
     <>
       <div className="row">
         {data?.data?.data.map((product) => (
-          <div key={product.id} className="w-full md:w-1/3 lg:w-1/4 xl:w-1/6">
-            <div className="product p-2">
+          <div key={product.id} className="w-full md:w-1/3 lg:w-1/4 ">
+            <div className="product p-2 hover:shadow-lg   hover:shadow-emerald-500/70 transition duration-300">
               <Link
-                to={`productdetails/${product.id}/${product.category.name}`}
+                to={`/productdetails/${product.id}/${product.category.name}`}
               >
                 <img
                   src={product.imageCover}
@@ -37,7 +77,7 @@ export default function Products() {
                   </span>
                 </div>
               </Link>
-              <button className="btn">add to cart</button>
+              <button onClick={() => addToCart(product.id)} className="btn">{Loading && currentId == product.id ? <i className="fas fa-spinner fa-spin"></i> : "Add to cart"}</button>
             </div>
           </div>
         ))}

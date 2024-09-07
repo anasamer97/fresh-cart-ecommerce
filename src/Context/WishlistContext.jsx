@@ -15,9 +15,7 @@ export default function WishlistContextProvider(props) {
 
     async function getLoggedUserWishlist() {
         return axios.get(`https://ecommerce.routemisr.com/api/v1/wishlist`, { headers }).then((res) => {
-            console.log(res)
             setWishListitems(res.data.data.length)
-            console.log(res.data.data.length );
             return res;
         }).catch((err) => err);
     }

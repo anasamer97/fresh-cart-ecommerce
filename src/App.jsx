@@ -1,28 +1,26 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { createHashRouter } from "react-router-dom";
+import  { Toaster } from 'react-hot-toast';
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home/Home";
 import Products from "./Components/Products/Products";
 import Categories from "./Components/Categories/Categories";
 import Brands from "./Components/Brands/Brands";
 import Login from "./Components/Login/Login";
-import Register from "./Components/Register/Register";
+import Register from "./Components/Register/Register";  
 import Cart from "./Components/Cart/Cart";
 import Notfound from "./Components/Notfound/Notfound";
-import CounterContextProvider from "./Context/CounterContext";
 import UserContextProvider from "./Context/UserContext";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import ProductDetails from "./Components/ProductDetails/ProductDetails";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import CartContextProvider from "./Context/CartContext";
-import  { Toaster } from 'react-hot-toast';
 import Checkout from "./Components/Checkout/Checkout";
-import Allorders from "./Components/Allorders/Allorders";
 import Wishlist from "./Components/Wishlist/Wishlist";
 import WishlistContextProvider from "./Context/WishlistContext";
 import ForgottenPassword from "./Components/ForgottenPassword/ForgottenPassword";
 import PasswordToken from "./Components/PasswordToken/PasswordToken";
-import { createHashRouter } from "react-router-dom";
 
 
 
@@ -77,14 +75,7 @@ let x = createHashRouter([
           </ProtectedRoute>
         ),
       },
-      {
-        path: "allorders",
-        element: (
-          <ProtectedRoute>
-            <Allorders />
-          </ProtectedRoute>
-        ),
-      },
+      ,
       {
         path: "productdetails/:id/:category",
         element: (
@@ -123,7 +114,6 @@ export default function App() {
   return (
     <>
       <UserContextProvider>
-        <CounterContextProvider>
           <QueryClientProvider client={query}>
             <CartContextProvider>
               <WishlistContextProvider>
@@ -132,7 +122,6 @@ export default function App() {
               <Toaster />
             </CartContextProvider>
           </QueryClientProvider>
-        </CounterContextProvider>
       </UserContextProvider>
     </>
   );

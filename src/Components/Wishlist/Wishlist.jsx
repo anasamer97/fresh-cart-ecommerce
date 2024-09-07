@@ -10,7 +10,7 @@ import { CartContext } from "../../Context/CartContext";
 export default function Wishlist() {
 
   const [WishListDetails, setWishListDetails] = useState(null);
-  const [isExecuting, setIsExecuting] = useState(false); // Local loading state
+  const [isExecuting, setIsExecuting] = useState(false); 
   const [currentId, setcurrentId] = useState(0)
   let {getLoggedUserWishlist, deleteFromWishlist} = useContext(WishlistContext)
   let {addProductToCard, setnumberItems, numberItems} = useContext(CartContext);
@@ -18,20 +18,15 @@ export default function Wishlist() {
 
   
   async function getWishListItems() {
-    let response = await getLoggedUserWishlist();
     setIsExecuting(true)
-    console.log(response);
+    let response = await getLoggedUserWishlist();
     if (response.data.status == "success") {
       setWishListDetails(response.data.data);
-      console.log(response.data.data);  
+    setIsExecuting(false)
+
     }
 
-    else {
-      console.log(response);
-      
-    }
-  
-    setIsExecuting(false)
+
 
   }
   async function deleteItem(productId) {
@@ -39,7 +34,6 @@ export default function Wishlist() {
     if (response.data.status == "success") {
       toast.success('Product removed from wishlist');
       getWishListItems();
-      navigate('/wishlist')
     }
 
     
@@ -64,12 +58,11 @@ export default function Wishlist() {
   useEffect(() => {
     getWishListItems();
   }, []);
-  console.log(WishListDetails)
 
   if (isExecuting) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="loader animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-emerald-500"></div>
+      <div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
       </div>
     );
   }
@@ -77,7 +70,9 @@ export default function Wishlist() {
  
   return (
     <>
-    {WishListDetails?.length > 0 ?  <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    {WishListDetails?.length > 0 ?
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-12">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" className="px-16 py-3">
@@ -121,14 +116,14 @@ export default function Wishlist() {
      
       
     </tbody>
-  </table> : <h2 className="  text-white p-3  bg-slate-400  text-3xl my-8 text-center  ">
+  </table>
+      </div>
+     : <h2 className="  text-white p-3  bg-emerald-400  text-3xl my-8 text-center  ">
         No items in your wishlist
       </h2> }
      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
   
 </div>
-
-
 
     </>
   );
