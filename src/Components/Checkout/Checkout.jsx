@@ -3,8 +3,12 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { UserContext } from "../../Context/UserContext";
 import { CartContext } from "../../Context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {
+  const BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'https://anasamer97.github.io'
+  : 'http://localhost:5173';
   let {cartId} =  useContext(CartContext)
 
   let { checkout } = useContext(CartContext)
@@ -17,12 +21,13 @@ export default function Checkout() {
       city: ""
     },
     onSubmit: () => {
-      handleCheckout(cartId, `http://localhost:5173/fresh-cart-ecommerce`)
+      handleCheckout(cartId)
     } 
   });
 
 
-  async function handleCheckout(cartId, url) {
+  async function handleCheckout(cartId) {
+    const url = `${BASE_URL}/fresh-cart-ecommerce`;
     let {data} =  await checkout(cartId, url, formik.values);
     console.log(data.session.url);
     

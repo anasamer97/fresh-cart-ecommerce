@@ -189,7 +189,7 @@ export default function Cart() {
             <button className="btn my-3 text-center mx-auto">Checkout</button>
             </Link>
 
-      </div> </> : <h1 className="text-white p-3  bg-slate-400  text-3xl my-8 text-center">No product added..</h1>}
+      </div> </> : <h1 className="text-white p-3  bg-emerald-400  text-3xl my-8 text-center">No product added..</h1>}
       
     </>
   );

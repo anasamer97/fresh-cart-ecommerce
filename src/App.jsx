@@ -1,15 +1,14 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { createHashRouter } from "react-router-dom";
-import  { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home/Home";
 import Products from "./Components/Products/Products";
 import Categories from "./Components/Categories/Categories";
 import Brands from "./Components/Brands/Brands";
 import Login from "./Components/Login/Login";
-import Register from "./Components/Register/Register";  
+import Register from "./Components/Register/Register";
 import Cart from "./Components/Cart/Cart";
 import Notfound from "./Components/Notfound/Notfound";
 import UserContextProvider from "./Context/UserContext";
@@ -19,17 +18,12 @@ import CartContextProvider from "./Context/CartContext";
 import Checkout from "./Components/Checkout/Checkout";
 import Wishlist from "./Components/Wishlist/Wishlist";
 import WishlistContextProvider from "./Context/WishlistContext";
-import ForgottenPassword from "./Components/ForgottenPassword/ForgottenPassword";
-import PasswordToken from "./Components/PasswordToken/PasswordToken";
 
-
-
- 
-
-
+// Set up the query client
 let query = new QueryClient();
 
-let x = createHashRouter([
+// Define routes using HashRouter
+let router = createHashRouter([
   {
     path: "",
     element: <Layout />,
@@ -38,7 +32,7 @@ let x = createHashRouter([
         index: true,
         element: (
           <ProtectedRoute>
-            <Home />{" "}
+            <Home />
           </ProtectedRoute>
         ),
       },
@@ -46,7 +40,7 @@ let x = createHashRouter([
         path: "products",
         element: (
           <ProtectedRoute>
-            <Products />{" "}
+            <Products />
           </ProtectedRoute>
         ),
       },
@@ -54,7 +48,7 @@ let x = createHashRouter([
         path: "checkout",
         element: (
           <ProtectedRoute>
-            <Checkout />{" "}
+            <Checkout />
           </ProtectedRoute>
         ),
       },
@@ -62,7 +56,6 @@ let x = createHashRouter([
         path: "categories",
         element: (
           <ProtectedRoute>
-            {" "}
             <Categories />
           </ProtectedRoute>
         ),
@@ -75,7 +68,6 @@ let x = createHashRouter([
           </ProtectedRoute>
         ),
       },
-      ,
       {
         path: "productdetails/:id/:category",
         element: (
@@ -93,6 +85,14 @@ let x = createHashRouter([
         ),
       },
       {
+        path: "allorders",
+        element: (
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: "wishlist",
         element: (
           <ProtectedRoute>
@@ -103,25 +103,23 @@ let x = createHashRouter([
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
       { path: "*", element: <Notfound /> },
-      // { path: "forgottenPassword", element: <ForgottenPassword /> },
-      // {path: "reset-password-token", element: <PasswordToken/>},
     ],
   },
 ]);
 
-
+// Main App component using the RouterProvider
 export default function App() {
   return (
     <>
       <UserContextProvider>
-          <QueryClientProvider client={query}>
-            <CartContextProvider>
-              <WishlistContextProvider>
-              <RouterProvider router={x}></RouterProvider>
-              </WishlistContextProvider>
+        <QueryClientProvider client={query}>
+          <CartContextProvider>
+            <WishlistContextProvider>
+              <RouterProvider router={router} />
               <Toaster />
-            </CartContextProvider>
-          </QueryClientProvider>
+            </WishlistContextProvider>
+          </CartContextProvider>
+        </QueryClientProvider>
       </UserContextProvider>
     </>
   );
