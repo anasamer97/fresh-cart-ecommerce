@@ -52,35 +52,42 @@ export default function Categories() {
 
 
 
-  return (
-    <>
-      <div className="row gap-14 w-[90%] mx-auto  ">
-        {categories.map((category) => (
-          <div key={category._id} className="w-[300px] h-[300px] ">
-            <div onClick={()=> displaySubCat(category._id)}  className="product hover:shadow-lg border  hover:shadow-emerald-500/70 transition duration-300 border-slate-500">
-            <img src={category.image} className=" w-[300px] h-[300px] " alt="Product Image" />
-            <p className="text-center my-2 text-xl font-sans text-emerald-500 font-bold">{category.name}</p>
-            </div>
-            
+return (
+  <>
+    {/* Category grid */}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-[90%] mx-auto">
+      {categories
+        .filter((category) => category.name !== "Music")
+        .map((category) => (
+          <div
+            key={category._id}
+            className="bg-white p-4 shadow-lg rounded-lg hover:shadow-emerald-500/70 transition duration-300 cursor-pointer"
+            onClick={() => displaySubCat(category._id)}
+          >
+            <img
+              src={category.image}
+              className="w-full h-[250px] object-cover rounded-md mb-4"
+              alt={category.name}
+            />
+            <p className="text-center text-xl font-bold text-emerald-500">{category.name}</p>
+          </div>
+        ))}
+    </div>
+
+    {/* Subcategories */}
+    {subcategories.length > 0 ? (
+      <div ref={subcategoriesRef} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mx-12 mt-8">
+        {subcategories.map((subcategory) => (
+          <div key={subcategory._id} className="bg-white p-4 shadow-lg rounded-lg">
+            <p className="text-center text-xl font-bold text-emerald-500">{subcategory.name}</p>
           </div>
         ))}
       </div>
-
-
-      
-      
-
-      
-      {subcategories.length > 0 ?  <div ref={subcategoriesRef} className="row mx-12 mt-8">
-      {subcategories.map((subcategory) => (
-        <div key={subcategory._id} className="w-full sm:1/2 md:w-1/3 p-2">
-          <div className="product m-1 hover:shadow-lg hover:shadow-emerald-500/70 transition duration-300    border border-slate-500">
-          <p className="text-center my-2 text-xl font-sans text-emerald-500 font-bold">{subcategory.name}</p>
-          </div>
-          
-        </div>
-      ))}
-    </div> : <div className="bg-emerald-400 my-14 mx-auto text-white font-bold p-3 m-2 text-lg text-center">  No Subcategories  </div>}
-    </>
-  );
+    ) : (
+      <div className="bg-emerald-400 my-14 mx-auto text-white font-bold p-3 m-2 text-lg text-center">
+        No Subcategories
+      </div>
+    )}
+  </>
+);
 }

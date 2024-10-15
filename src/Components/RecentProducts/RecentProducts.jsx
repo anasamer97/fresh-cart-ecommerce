@@ -78,10 +78,9 @@ export default function RecentProducts() {
   return (
     <>
       <div className="row"> 
-        {data?.data?.data.map((product) => (
+        {data?.data?.data.filter((product)=> product.slug!= "relaxed-fit-knitted-joggers-lilac").map((product) => (
           <div key={product.id} className="w-full md:w-1/3 lg:w-1/4 ">
             <div className="product p-2 hover:shadow-lg   hover:shadow-emerald-500/70 transition duration-300">
-
               <Link
                 to={`productdetails/${product.id}/${product.category.name}`}
               >

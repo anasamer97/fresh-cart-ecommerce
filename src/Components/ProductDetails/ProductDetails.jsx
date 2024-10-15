@@ -134,7 +134,7 @@ export default function ProductDetails() {
       </div>
       <div className="row">
         {products.length > 0 ? (
-          products.map((product) => (
+          products.filter((product)=> product.slug!= "relaxed-fit-knitted-joggers-lilac").map((product) => (
             <div key={product.id} className="w-full md:w-1/3 lg:w-1/4 xl:w-1/6">
               <div className="product p-2">
                 <Link

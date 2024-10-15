@@ -19,6 +19,9 @@ export default function Products() {
 
   const [Loading, setLoading] = useState(false)
 
+  // Check if user is authenticated (has a user token)
+  const isAuthenticated = localStorage.getItem("userToken") ? true : false;
+
 
 
   async function addToCart(id) {
@@ -54,7 +57,7 @@ export default function Products() {
   return (
     <>
       <div className="row">
-        {data?.data?.data.map((product) => (
+        {data?.data?.data.filter((product)=> product.slug!= "relaxed-fit-knitted-joggers-lilac").map((product) => (
           <div key={product.id} className="w-full md:w-1/3 lg:w-1/4 ">
             <div className="product p-2 hover:shadow-lg   hover:shadow-emerald-500/70 transition duration-300">
               <Link
@@ -77,8 +80,15 @@ export default function Products() {
                   </span>
                 </div>
               </Link>
-              <button onClick={() => addToCart(product.id)} className="btn">{Loading && currentId == product.id ? <i className="fas fa-spinner fa-spin"></i> : "Add to cart"}</button>
-            </div>
+              {isAuthenticated && (
+                <button onClick={() => addToCart(product.id)} className="btn">
+                  {Loading && currentId === product.id ? (
+                    <i className="fas fa-spinner fa-spin"></i>
+                  ) : (
+                    "Add to cart"
+                  )}
+                </button>
+              )}  </div>
           </div>
         ))}
       </div>

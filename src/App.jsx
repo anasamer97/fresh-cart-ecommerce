@@ -1,4 +1,4 @@
-import { createHashRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, Navigate, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from 'react-hot-toast';
@@ -19,6 +19,7 @@ import Checkout from "./Components/Checkout/Checkout";
 import Wishlist from "./Components/Wishlist/Wishlist";
 import WishlistContextProvider from "./Context/WishlistContext";
 
+
 // Set up the query client
 let query = new QueryClient();
 
@@ -30,19 +31,11 @@ let router = createHashRouter([
     children: [
       {
         index: true,
-        element: (
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        ),
+        element: <Navigate to="/products" replace={true} />,
       },
       {
         path: "products",
-        element: (
-          <ProtectedRoute>
-            <Products />
-          </ProtectedRoute>
-        ),
+        element: (<Products />),
       },
       {
         path: "checkout",

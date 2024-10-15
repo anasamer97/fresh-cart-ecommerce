@@ -30,7 +30,6 @@ export default function Checkout() {
     const url = `${BASE_URL}/fresh-cart-ecommerce`;
     let {data} =  await checkout(cartId, url, formik.values);
     console.log(data.session.url);
-    
     window.location.href = data.session.url
   }
 
